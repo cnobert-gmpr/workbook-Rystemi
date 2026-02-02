@@ -1,23 +1,28 @@
+using System.Collections;
 using UnityEngine;
 
 namespace GMPR2512.Lesson05DeathzoneAndRespawn
 {
     public class DeathZone : MonoBehaviour
     {
-        [SerializeField] private Transform _spawnpoint;
+        [SerializeField] private Transform _spawnPoint;
         void OnTriggerEnter2D(Collider2D collider2D)
         {
-            if (collider2D.gameObject.CompareTag("Ball"))
+            if(collider2D.gameObject.CompareTag("Ball"))
             {
-                // Wait 2s, respawn the ball at pre-determined spawnpoint
+                //wait two seconds, respawn the ball at a pre-determined spawnpoint
                 StartCoroutine(RespawnBall(collider2D.gameObject));
-                // Destroy(collider2D.gameObject);
             }
         }
         private IEnumerator RespawnBall(GameObject ball)
         {
             yield return new WaitForSeconds(2);
-            Debug.Log("It's been 2s since the ball has left the gameplay!");
+            
+            Rigidbody2D ballRB = ball.GetComponent<Rigidbody2D>();
+            ballRB.linearVelocity = Vector2.zero;
+            ballRB.angularVelocity = 0;
+            // whatever we want to happen in 2 seconds goes here
+            ball.transform.position = _spawnPoint.position;
         }
     }
 }
