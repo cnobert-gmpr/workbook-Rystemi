@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Video;
 
 namespace GMPR2512.Lesson07
 {
@@ -8,7 +9,9 @@ namespace GMPR2512.Lesson07
         [SerializeField] private float _movementSpeed = 5, _rotationSpeed = 500, _scaleSpeed = 1;
         [SerializeField] private float _minRotation = -25, _maxRotation = 25;
 
-        private InputAction _moveAction, _rotationAction, _scaleAction;
+        [SerializeField] private GameObject _projectilePrefab;
+
+        private InputAction _moveAction, _rotationAction, _scaleAction, _fireAction;
 
         void Awake()
         {
@@ -16,13 +19,38 @@ namespace GMPR2512.Lesson07
             _moveAction = InputSystem.actions.FindAction("Player/Move");
             _rotationAction = InputSystem.actions.FindAction("Player/Move");
             _scaleAction = InputSystem.actions.FindAction("Player/Scale");
+            _fireAction = InputSystem.actions.FindAction("Player/Jump");
+        }
+
+        // Unity will keep the input actions disabled by default for efficiency reasons.
+        // So, we need to enable/disable the,. It's best practice to include the methods below.
+        void OnEnable()
+        {
+            _moveAction?.Enable();
+            _rotationAction?.Enable();
+            _scaleAction?.Enable();
+            if (_fireAction != null)
+            {
+                _fireAction.Enable();
+                // register methoeds with fire action
+                _fireAction.performed += FireButtonPressed;
+                // _fireAction.canceled += FireButtonPressed;
+            }
+        }
+
+        void OnDisable()
+        {
+            _moveAction?.Disable();
+            _rotationAction?.Disable();
+            _scaleAction?.Disable();
+            _fireAction?.Disable();
         }
         void Update()
         {
             #region movement
             Vector2 moveDirection = new Vector2(_moveAction.ReadValue<Vector2>().x, 0);
             Vector2 translation = moveDirection.normalized * _movementSpeed * Time.deltaTime;
-            transform.Translate(translation, Space.Self);
+            transform.Translate(translation, Space.World);
             #endregion
 
             #region rotation
@@ -62,6 +90,20 @@ namespace GMPR2512.Lesson07
             transform.localScale = scale;
             #endregion
 
+        }
+
+        private void FireButtonPressed(InputAction.CallbackContext context)
+        {
+            Vector3 projectileStartPosition = transform.GetChild(0).position;
+            GameObject theProjectile = 
+                Instantiate(_projectilePrefab, projectileStartPosition, transform.rotation);
+            Projectile projectileScript = theProjectile.GetComponent<Projectile>();
+            projectileScript.Speed = 5;
+            projectileScript.Direction = transform.up;
+        }
+        private void FireButtonReleased(InputAction.CallbackContext context)
+        {
+            
         }
     }
 }
