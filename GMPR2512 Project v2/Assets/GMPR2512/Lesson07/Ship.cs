@@ -9,6 +9,8 @@ namespace GMPR2512.Lesson07
         [SerializeField] private float _movementSpeed = 5, _rotationSpeed = 500, _scaleSpeed = 1;
         [SerializeField] private float _minRotation = -25, _maxRotation = 25;
 
+        [SerializeField] private float _projectileSpeed = 5, _projectileSpinVelocity = -2000; 
+
         [SerializeField] private GameObject _projectilePrefab;
 
         private InputAction _moveAction, _rotationAction, _scaleAction, _fireAction;
@@ -98,8 +100,9 @@ namespace GMPR2512.Lesson07
             GameObject theProjectile = 
                 Instantiate(_projectilePrefab, projectileStartPosition, transform.rotation);
             Projectile projectileScript = theProjectile.GetComponent<Projectile>();
-            projectileScript.Speed = 5;
+            projectileScript.Speed = _projectileSpeed;
             projectileScript.Direction = transform.up;
+            projectileScript.SpinVelocity = -_projectileSpinVelocity;
         }
         private void FireButtonReleased(InputAction.CallbackContext context)
         {
