@@ -71,6 +71,7 @@
   <Project Path="Unity.2D.Aseprite.Common.csproj" />
   <Project Path="Unity.RenderPipeline.Universal.ShaderLibrary.csproj" />
   <Project Path="GMPR2512.Lesson04Scripting01.csproj" />
+<<<<<<< Updated upstream
   <Project Path="Unity.InputSystem.DocCodeSamples.csproj" />
   <Project Path="Unity.RenderPipelines.Universal.Shaders.csproj" />
   <Project Path="Unity.RenderPipelines.Core.Runtime.Shared.csproj" />
@@ -86,4 +87,8 @@
   <Project Path="Unity.RenderPipelines.Universal.Config.Runtime.csproj" />
   <Project Path="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.csproj" />
   <Project Path="Unity.RenderPipelines.Core.ShaderLibrary.csproj" />
+=======
+  <Project Path="GMPR2512.Lesson08.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
+>>>>>>> Stashed changes
 </Solution>

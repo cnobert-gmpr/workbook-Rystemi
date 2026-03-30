@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/GMPR2512/Lesson08/Scene01.unity
     guid: 7507e97ff215c144bb912811b068f09e
+  - enabled: 1
+    path: Assets/GMPR2512/Lesson08/Scene02.unity
+    guid: af642b00f84d07c4ab14c2063bc7f90a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
