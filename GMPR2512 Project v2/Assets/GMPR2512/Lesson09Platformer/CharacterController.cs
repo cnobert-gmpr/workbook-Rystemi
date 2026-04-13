@@ -4,9 +4,9 @@ namespace GMPR2512.Lesson09Platformer
 {
     public class CharacterController : MonoBehaviour
     {
-        public float _maxSpeed = 5;
-        public Transform _groundCheck;
-        public float _jumpForce = 1000;
+        [SerializeField] private float _maxSpeed = 5;
+        [SerializeField] private Transform _groundCheck;
+        [SerializeField] private float _jumpForce = 1000;
 
         protected Animator _myAnimator;
         protected Rigidbody2D _myRigidBody;
@@ -26,6 +26,7 @@ namespace GMPR2512.Lesson09Platformer
             //_grounded will be true if our hero is standing on a platform (remember to add the platform to the ground layer)
             //layer mask bitwise ops: https://answers.unity.com/questions/8715/how-do-i-use-layermasks.html
             _grounded = Physics2D.Linecast(transform.position, _groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
+            
             if (Input.GetButtonDown("Jump") && _grounded)
             {
                 _jump = true;
