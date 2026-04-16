@@ -38,6 +38,11 @@ namespace GMPR2512.Lesson09Platformer
             float horizontalAxis = Input.GetAxis("Horizontal");
             _myAnimator.SetFloat("Speed", Mathf.Abs(horizontalAxis));
 
+            if( (horizontalAxis > 0 && !_facingRight) || (horizontalAxis < 0 && _facingRight))
+            {
+                Flip();
+            }
+
             //Have we reached maxSpeed? If not, add force.
             if (horizontalAxis * _myRigidBody.linearVelocity.x < _maxSpeed)
             {
@@ -60,5 +65,13 @@ namespace GMPR2512.Lesson09Platformer
                 _jump = false;
             }
         }
-    }
+
+        void Flip()
+        {
+            _facingRight =! _facingRight;
+            Vector3 theScale = transform.localScale;
+            theScale.x *= -1;
+            transform.localScale = theScale;
+        }
+    }   
 }
