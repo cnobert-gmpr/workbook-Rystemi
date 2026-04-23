@@ -22,18 +22,21 @@ namespace GMPR2512.Lesson09Platformer
         }
         void Update()
         {
-            float rotationInput = 0;
-            if(Input.GetKey(KeyCode.Comma))
-                rotationInput = 300;
-            else if (Input.GetKey(KeyCode.Period))
-                rotationInput = -300;
+            #region rotation
+            // float rotationInput = 0;
+            // if(Input.GetKey(KeyCode.Comma))
+            //     rotationInput = 300;
+            // else if (Input.GetKey(KeyCode.Period))
+            //     rotationInput = -300;
 
-            rotationInput *= Time.deltaTime;
-            transform.parent.Rotate(new Vector3(0, 0, rotationInput));
+            // rotationInput *= Time.deltaTime;
+            transform.parent.Rotate(new Vector3(0, 0, 100 * Time.deltaTime));
+            #endregion
 
-            int layerMask = LayerMask.GetMask("Ground", "Enemy");
+            int layerMask = LayerMask.GetMask("Player", "Ground");
             RaycastHit2D rh2d = Physics2D.Raycast(transform.position, transform.right, _laserLength, layerMask);
 
+            #region laser line
             Vector3 endPoint = transform.position + transform.right * _laserLength;
 
             if(rh2d.collider != null)
@@ -43,18 +46,22 @@ namespace GMPR2512.Lesson09Platformer
                 _laserLine.SetPosition(0, transform.position);
                 _laserLine.SetPosition(1, endPoint);
             }
+            #endregion
 
-            if (rh2d.transform != null)
+            #region laser line length
+            if (rh2d.transform != null && rh2d.transform.gameObject.layer.Equals(LayerMask.NameToLayer("Player")))
                 {
-                    rh2d.transform.gameObject.GetComponent<Renderer>().material.color = Color.green;
+                    Destroy(rh2d.transform.gameObject);
+                    // rh2d.transform.gameObject.GetComponent<Renderer>().material.color = Color.green;
 
-                    if(_lastObjectHit != null && rh2d.transform != _lastObjectHit)
-                        _lastObjectHit.gameObject.GetComponent<Renderer>().material.color = Color.white;
+                    // if(_lastObjectHit != null && rh2d.transform != _lastObjectHit)
+                    //     _lastObjectHit.gameObject.GetComponent<Renderer>().material.color = Color.white;
                     
-                    _lastObjectHit = rh2d.transform;
+                    // _lastObjectHit = rh2d.transform;
                 }
-            else if (_lastObjectHit != null)
-                _lastObjectHit.gameObject.GetComponent<Renderer>().material.color = Color.white;
+            // else if (_lastObjectHit != null)
+            //     _lastObjectHit.gameObject.GetComponent<Renderer>().material.color = Color.white;
+            #endregion
         }
 
         void OnDrawGizmos()
